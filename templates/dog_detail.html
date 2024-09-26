@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Пес {{dog.name}}
+{%endblock%}
+
+{% block page %}
+<a href="{% url 'home' %}"> Главная </a>
+    <div>
+        <h2>{{dog.name}}</h2>
+        {% if dog.photo %}
+            <img src="{{ dog.photo.url }}" alt="{{ dog.name }}">
+        {% endif %}
+        <div>{{dog.breed}}</div>
+        <div>{{dog.is_bought}}</div>
+    </div>
+    <h2>Заказ</h2>
+    {% if sent %}
+        <h2>Спасибо! Ваша заявка принята!</h2>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Отправить заказ"></input>
+    </form>
+{% endblock %}

@@ -22,6 +22,7 @@ class UsersDog(models.Model):
     name = models.CharField(max_length=30, verbose_name='Имя')
     breed = models.CharField(max_length=30, verbose_name='Порода')
     is_bought = models.BooleanField(verbose_name='Дворовая')
+    photo = models.ImageField('Фото', upload_to='hello/photos', default='', blank=True)
 
     def __str__(self):
         return self.name
@@ -30,3 +31,9 @@ class UsersDog(models.Model):
         verbose_name="Собака"
         verbose_name_plural="Собаки"
         ordering = ['name']
+
+class Order(models.Model):
+    dog = models.ForeignKey(UsersDog, verbose_name='Собака', on_delete=models.CASCADE)
+    name = models.CharField(max_length=30, verbose_name='Имя')
+    phone = models.CharField(max_length=30, verbose_name='Телефон')
+    date = models.DateTimeField(verbose_name='Дата', auto_now_add=True)
